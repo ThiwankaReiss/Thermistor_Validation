@@ -13,6 +13,12 @@ The work compares paired thermistor readings under multiple setups and operating
 - `thermistor_stream.ino`
   - Arduino sketch for streaming raw thermistor channels over serial at 10 Hz.
   - CSV output header: `tick_ms,a0,a1,a2`
+- `thermistor_logger.py`
+  - Python logger for:
+    - reading Arduino serial data (`tick_ms,a0,a1,a2`),
+    - converting raw ADC to temperature in C using Beta-model constants,
+    - saving CSV with `time_s`, `a0_temp_c`, `a1_temp_c`, `a2_temp_c`, and delta,
+    - plotting live temperature and delta trends.
 - `derive_derated_shutdown.py`
   - Python analysis script that:
     - reads processed temperature CSV data,
@@ -32,6 +38,8 @@ The following photos show the physical setup used during thermistor comparison a
 ![Setup image 2](img/img2.jpeg)
 
 ![Setup image 3](img/Img3.jpeg)
+
+![Simulation image](img/Sim.png)
 
 ## Analysis Method (Implemented in Python)
 The script applies a steady-state filtered approach to reduce transient bias:
@@ -57,27 +65,40 @@ The script applies a steady-state filtered approach to reduce transient bias:
 
 ## How to Use
 
-### 1) Collect raw thermistor data (Arduino)
-1. Flash `thermistor_stream.ino` to the board.
-2. Open serial monitor/logger at 115200 baud.
-3. Record streamed rows:
-   - `tick_ms,a0,a1,a2`
+### 0) Install Python dependencies
 
-### 2) Prepare analysis CSV
-Convert raw logs into a processed CSV with this header:
+```powershell
+python -m pip install pyserial matplotlib
+```
+
+### 1) Stream data from Arduino
+1. Flash `thermistor_stream.ino` to the board.
+2. Ensure serial output format is:
+  - `tick_ms,a0,a1,a2`
+
+### 2) Log and convert with thermistor_logger.py
+Run the logger to capture serial data, convert to temperatures, and save CSV:
+
+```powershell
+python thermistor_logger.py --port COM5 --baud 115200 --csv temperature_readings.csv --window 120
+```
+
+If `--port` is omitted, the script attempts to auto-detect a serial port.
+
+Generated CSV includes the columns needed by derating analysis, including:
 
 ```csv
 time_s,a0_temp_c,a1_temp_c
 ```
 
 Notes:
-- `time_s` should be time in seconds.
-- `a0_temp_c` and `a1_temp_c` should be converted temperatures in Celsius.
+- `time_s` is generated from Arduino tick time.
+- temperature channels are converted to Celsius by the logger.
 
 ### 3) Run derating analysis
 
 ```powershell
-python derive_derated_shutdown.py --input your_data.csv
+python derive_derated_shutdown.py --input temperature_readings.csv
 ```
 
 Optional outputs:
@@ -111,6 +132,6 @@ The analysis script writes three CSV files:
 - Threshold constants are defined near the top of `derive_derated_shutdown.py` and can be tuned for different noise/environment conditions.
 
 ## Suggested Next Improvements
-- Add an automated raw-to-temperature conversion utility from `tick_ms,a0,a1,a2` logs.
+- Add a calibration workflow (per sensor channel) to improve absolute temperature accuracy.
 - Add plotting for setup-wise comparison and steady-state detection visualization.
 - Add sample input/output datasets for reproducible validation.
