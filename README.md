@@ -36,6 +36,7 @@ The following photos show the physical setup used during thermistor comparison a
 <p align="center">
   <img src="img/Img1.jpeg" alt="Setup image 1" width="24%" />
   <img src="img/img2.jpeg" alt="Setup image 2" width="24%" />
+  <br>
   <img src="img/Img3.jpeg" alt="Setup image 3" width="24%" />
   <img src="img/Sim.png" alt="Simulation image" width="24%" />
 </p>
