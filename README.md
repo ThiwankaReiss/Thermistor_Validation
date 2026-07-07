@@ -24,6 +24,15 @@ The work compares paired thermistor readings under multiple setups and operating
 - `SES details.docx`
   - Main technical/report document containing setups, observations, equations, and conclusions.
 
+## Setup Images
+The following photos show the physical setup used during thermistor comparison and logging.
+
+![Setup image 1](img/Img1.jpeg)
+
+![Setup image 2](img/img2.jpeg)
+
+![Setup image 3](img/Img3.jpeg)
+
 ## Analysis Method (Implemented in Python)
 The script applies a steady-state filtered approach to reduce transient bias:
 
