@@ -34,11 +34,11 @@ The work compares paired thermistor readings under multiple setups and operating
 The following photos show the physical setup used during thermistor comparison and logging.
 
 <p align="center">
-  <img src="img/Img1.jpeg" alt="Setup image 1" width="24%" />
-  <img src="img/img2.jpeg" alt="Setup image 2" width="24%" />
+  <img src="img/Img1.jpeg" alt="Setup image 1" width="49%" />
+  <img src="img/img2.jpeg" alt="Setup image 2" width="49%" />
   <br>
-  <img src="img/Img3.jpeg" alt="Setup image 3" width="24%" />
-  <img src="img/Sim.png" alt="Simulation image" width="24%" />
+  <img src="img/Img3.jpeg" alt="Setup image 3" width="49%" />
+  <img src="img/Sim.png" alt="Simulation image" width="49%" />
 </p>
 
 ## Analysis Method (Implemented in Python)
