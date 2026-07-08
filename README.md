@@ -51,7 +51,6 @@ The script applies a steady-state filtered approach to reduce transient bias:
 2. Compute offset:
    - `delta_t = a0_temp_c - a1_temp_c`
 3. Detect steady-state windows using:
-   - window length: 5 s,
    - slope threshold: 0.08 C/s for each channel,
    - offset standard deviation threshold: 0.35 C,
    - minimum steady segment duration: 15 s.
